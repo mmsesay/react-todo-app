@@ -1,10 +1,9 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styles from "./TodoItem.module.css"
 
-const TodoItem = (props) => {
-  let state = {
-    editing: false,
-  }
+const TodoItem = props => {
+  const [editing, setEditing] = useState(false)
+
   const completedStyle = {
     fontStyle: "italic",
     color: "#595959",
@@ -14,26 +13,31 @@ const TodoItem = (props) => {
   const { completed, id, title } = props.todo;
 
   const handleEditing = () => {
-    this.setState({
-      editing: true,
-    });
+    setEditing(true);
   }
 
   const handleUpdatedDone = event => {
     if (event.key === "Enter") {
-      this.setState({ editing: false })
+      setEditing(false)
     }
   }
 
   let viewMode = {}
   let editMode = {}
 
-  // if (this.state.editing) {
-  //   viewMode.display = "none"
-  // } else {
-  //   editMode.display = "none"
-  // }
+  if (editing) {
+    viewMode.display = "none"
+  } else {
+    editMode.display = "none"
+  }
 
+
+  useEffect(() => {
+    return () => {
+      console.log("Cleaning up...")
+    }
+  }, [])
+  
   return (
     <div>
       <li className={styles.item}>
